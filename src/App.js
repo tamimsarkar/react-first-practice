@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
 
+import './App.css';
+import { useState } from 'react';
+import Main from './components/main/Main';
+import data from './data.json'
+import Salary from './components/salaray/Salary';
 function App() {
+ const [users, setUsers] = useState(data);
+ const [salary, setSalary] = useState([]);
+ const handleSalary = (user) => {
+   const allSalary = [...salary,user]
+   setSalary(allSalary)
+ }
+ const main = {
+   display: 'flex',
+   alignItems: 'center',
+   justifyContent: 'center',
+
+ }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <div style={main} className="main">
+       {
+         users.map(user => <Main salary={handleSalary} key={user.id}  user={user}></Main>)
+       }
+     </div>
+     <div className="salary">
+       <Salary addSalary={salary}></Salary>
+     </div>
     </div>
   );
 }
